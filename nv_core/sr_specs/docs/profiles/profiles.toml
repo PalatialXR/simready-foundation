@@ -1,0 +1,73 @@
+[Prop-Robotics-Neutral]
+"1.0.0" = {features = [
+    {"FET000_CORE" = {version = "0.1.0"}}, # "Core"
+    {"FET001_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Minimal"
+    {"FET003_BASE_NEUTRAL" = {version = "0.1.0"}}, # "RBD Physics"
+    {"FET004_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Simulate Multi-Body Physics"
+    {"FET005_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Simulate Grasp Physics"
+    {"FET006_BASE_MDL" = {version = "0.1.0"}}, # "Matrials"
+    
+]}
+"2.0.0" = {features = [
+    {"FET000_CORE" = {version = "0.1.0"}}, # "Core"
+    {"FET001_BASE_NEUTRAL" = {version = "1.0.0"}}, # "Minimal"
+    {"FET003_BASE_NEUTRAL" = {version = "0.1.0"}}, # "RBD Physics"
+    {"FET004_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Simulate Multi-Body Physics"
+    {"FET005_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Simulate Grasp Physics"
+    {"FET006_BASE_MDL" = {version = "0.1.0"}}, # "Matrials"
+]}
+
+[Prop-Robotics-Physx]
+"1.0.0" = {features = [
+    {"FET000_CORE" = {version = "0.1.0"}}, # "Core"
+    {"FET001_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Minimal"
+    {"FET003_BASE_PHYSX" = {version = "0.1.0"}}, # "RBD Physics"
+    {"FET004_BASE_PHYSX" = {version = "0.1.0"}}, # "Simulate Multi-Body Physics and SDF collision approximation"
+    {"FET005_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Simulate Grasp Physics"
+    {"FET006_BASE_MDL" = {version = "0.1.0"}}, # "Matrials"
+]}
+"2.0.0" = {features = [
+    {"FET000_CORE" = {version = "0.1.0"}}, # "Core"
+    {"FET001_BASE_NEUTRAL" = {version = "1.0.0"}}, # "Minimal"
+    {"FET003_BASE_PHYSX" = {version = "0.1.0"}}, # "RBD Physics"
+    {"FET004_BASE_PHYSX" = {version = "0.1.0"}}, # "Simulate Multi-Body Physics and SDF collision approximation"
+    {"FET005_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Simulate Grasp Physics"
+    {"FET006_BASE_MDL" = {version = "0.1.0"}}, # "Matrials"
+]}
+
+[Prop-Robotics-Isaac]
+"1.0.0" = {features = [
+    {"FET001_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Minimal"
+    {"FET003_BASE_PHYSX" = {version = "0.1.0"}}, # "RBD Physics"
+    {"FET004_BASE_PHYSX" = {version = "0.1.0"}}, # "Simulate Multi-Body Physics and SDF collision approximation"
+    {"FET005_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Simulate Grasp Physics"
+    {"FET100_BASE_ISAACSIM" = {version = "0.1.0"}}, # "Isaac composition
+]}
+
+[Robot-Body-Neutral]
+"1.0.0" = {features = [
+    {"FET001_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Minimal"
+    {"FET003_BASE_NEUTRAL" = {version = "0.1.0"}}, # "RBD Physics"
+    {"FET004_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Simulate Multi-Body Physics"
+    {"FET022_DRIVEN_JOINTS_NEUTRAL" = {version = "0.1.0"}}, # "Driven Joints
+    {"FET024_BASE_ARTICULATION_NEUTRAL" = {version = "0.1.0"}}, # "Neutral Base Articulation"
+]}
+
+[Robot-Body-Runnable]
+"1.0.0" = {features = [
+    {"FET001_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Minimal"
+    {"FET004_ROBOT_PHYSX" = {version = "0.2.0"}}, # "Simulate Multi-Body Physics and SDF collision approximation"
+    {"FET021_ROBOT_CORE_RUNNABLE" = {version = "0.2.0"}}, # "Robot Core Runnable"
+    {"FET022_DRIVEN_JOINTS_PHYSX" = {version = "0.1.0"}}, # "Physx Driven Joints
+    {"FET024_BASE_ARTICULATION_PHYSX" = {version = "0.1.0"}}, # "Physx Base Articulation"
+]}
+
+[Robot-Body-Isaac]
+"1.0.0" = {features = [
+    {"FET001_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Minimal"
+    {"FET004_ROBOT_PHYSX" = {version = "0.2.0"}}, # "Simulate Multi-Body Physics and SDF collision approximation"
+    {"FET021_ROBOT_CORE_ISAAC" = {version = "0.2.0"}}, # "Robot Core Isaac"
+    {"FET022_DRIVEN_JOINTS_ISAAC" = {version = "0.1.0"}}, # "Isaac Driven Joints
+    {"FET024_BASE_ARTICULATION_PHYSX" = {version = "0.1.0"}}, # "Isaac Base Articulation"
+    {"FET100_BASE_ISAACSIM" = {version = "0.1.0"}}, # "Isaac composition
+]}

@@ -1,0 +1,3 @@
+omniverse-asset-validator[usd,numpy]
+omniverse-usd-profiles
+usd-core>=22.11
