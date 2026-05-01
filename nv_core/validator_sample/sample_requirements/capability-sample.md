@@ -4,7 +4,7 @@
 
 ## Overview
 
-A sample category for demo requirements. SAMP.001 requires the stage’s default prim to be named "Foo"; see `requirement-name.md` for valid and invalid USDA examples.
+A sample category for demo requirements. SAMP.001 requires the stage's default prim to be named "World"; see `requirement-name.md` for valid and invalid USDA examples.
 
 ## Requirements
 

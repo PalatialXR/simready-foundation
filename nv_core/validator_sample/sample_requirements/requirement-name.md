@@ -9,19 +9,19 @@
 
 ## Summary
 
-The stage must have a default prim named exactly "Foo".
+The stage must have a default prim named exactly "World".
 
 ## Description
 
-This sample requirement ensures that the USD stage has a default prim and that its name is "Foo". It is used by the validation sample to illustrate requirement specification and rule implementation.
+This sample requirement ensures that the USD stage has a default prim and that its name is "World". It is used by the validation sample to illustrate requirement specification and rule implementation.
 
 ### Valid USDA
 
-The asset passes SAMP.001 when the stage has a default prim and that prim’s name is "Foo". For example:
+The asset passes SAMP.001 when the stage has a default prim and that prim's name is "World". For example:
 
 ```usda
 #usda 1.0
-def "Foo"
+def "World"
 {
 }
 ```
@@ -31,9 +31,9 @@ Or with an explicit defaultPrim metadata:
 ```usda
 #usda 1.0
 (
-    defaultPrim = "Foo"
+    defaultPrim = "World"
 )
-def "Foo"
+def "World"
 {
 }
 ```
@@ -51,7 +51,7 @@ def "SomePrim"
 }
 ```
 
-- **Default prim has a different name** — the default prim exists but is not named "Foo" (e.g. "Bar", "Root", etc.):
+- **Default prim has a different name** - the default prim exists but is not named "World" (e.g. "Bar", "Root", etc.):
 
 ```usda
 #usda 1.0
