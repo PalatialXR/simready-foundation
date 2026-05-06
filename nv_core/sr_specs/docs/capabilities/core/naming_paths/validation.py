@@ -219,8 +219,10 @@ class DirectoryStructureChecker(omni.asset_validator.core.BaseRuleChecker):
         dir_path = os.path.dirname(stage_path)
         if dir_path:
             # Check for consistent directory naming
-            dirs = Path(current_dir).parts
+            dirs = Path(dir_path).parts
             for dir_name in dirs:
+                if dir_name in {"", os.sep, "/"}:
+                    continue
                 if dir_name and not VALID_FILE_NAME_PATTERN.match(dir_name):
                     self._AddFailedCheck(
                         requirement=cap.NamingPathsRequirements.NP_003,
@@ -383,6 +385,41 @@ class MetadataLocationChecker(omni.asset_validator.core.BaseRuleChecker):
 class RelativePathsChecker(omni.asset_validator.core.BaseRuleChecker):
     """Check NP.007: Relative paths compliance."""
 
+    @staticmethod
+    def _list_op_items(value):
+        if not value:
+            return []
+        items = []
+        for method_name in (
+            "GetExplicitItems",
+            "GetAddedItems",
+            "GetPrependedItems",
+            "GetAppendedItems",
+        ):
+            method = getattr(value, method_name, None)
+            if not callable(method):
+                continue
+            try:
+                items.extend(method())
+            except Exception:
+                continue
+        return items
+
+    @staticmethod
+    def _asset_path(value) -> str:
+        if value is None:
+            return ""
+        asset_path = getattr(value, "assetPath", None)
+        if asset_path:
+            return str(asset_path)
+        getter = getattr(value, "GetAssetPath", None)
+        if callable(getter):
+            try:
+                return str(getter() or "")
+            except Exception:
+                return ""
+        return str(value)
+
     def CheckStage(self, stage: Usd.Stage) -> None:
         """Check relative paths."""
         # Get the stage's file path
@@ -398,8 +435,8 @@ class RelativePathsChecker(omni.asset_validator.core.BaseRuleChecker):
         # Check all prims in the stage
         for prim in stage.Traverse():
             # Check references
-            for ref in prim.GetReferences():
-                ref_path = ref.GetAssetPath()
+            for ref in self._list_op_items(prim.GetMetadata("references")):
+                ref_path = self._asset_path(ref)
                 if is_absolute_path(ref_path):
                     self._AddFailedCheck(
                         requirement=cap.NamingPathsRequirements.NP_007,
@@ -408,8 +445,8 @@ class RelativePathsChecker(omni.asset_validator.core.BaseRuleChecker):
                     )
 
             # Check payloads
-            for payload in prim.GetPayloads():
-                payload_path = payload.GetAssetPath()
+            for payload in self._list_op_items(prim.GetMetadata("payload")):
+                payload_path = self._asset_path(payload)
                 if is_absolute_path(payload_path):
                     self._AddFailedCheck(
                         requirement=cap.NamingPathsRequirements.NP_007,
@@ -417,14 +454,13 @@ class RelativePathsChecker(omni.asset_validator.core.BaseRuleChecker):
                         at=prim,
                     )
 
-            # Check subLayers
-            for sublayer in prim.GetMetadata("subLayers"):
-                if is_absolute_path(sublayer):
-                    self._AddFailedCheck(
-                        requirement=cap.NamingPathsRequirements.NP_007,
-                        message=f"Prim '{prim.GetPath()}' has absolute path subLayer: '{sublayer}'. Use relative paths instead.",
-                        at=prim,
-                    )
+        for sublayer in stage.GetRootLayer().subLayerPaths:
+            if is_absolute_path(sublayer):
+                self._AddFailedCheck(
+                    requirement=cap.NamingPathsRequirements.NP_007,
+                    message=f"Root layer has absolute path subLayer: '{sublayer}'. Use relative paths instead.",
+                    at=stage,
+                )
 
         # Check custom layer data for absolute paths
         root_layer = stage.GetRootLayer()

@@ -17,6 +17,14 @@
     {"FET006_BASE_MDL" = {version = "0.1.0"}}, # "Matrials"
 ]}
 
+[Prop-Robotics-SingleRigid]
+"1.0.0" = {features = [
+    {"FET000_CORE" = {version = "0.1.0"}}, # "Core"
+    {"FET001_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Minimal"
+    {"FET003_BASE_NEUTRAL" = {version = "0.1.0"}}, # "RBD Physics"
+    {"FET005_BASE_NEUTRAL" = {version = "0.1.0"}}, # "Simulate Grasp Physics"
+]}
+
 [Prop-Robotics-Physx]
 "1.0.0" = {features = [
     {"FET000_CORE" = {version = "0.1.0"}}, # "Core"

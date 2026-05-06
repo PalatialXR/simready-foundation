@@ -37,8 +37,12 @@ from pxr import Sdf, Usd
 class SimReadyCapabilityChecker(BaseRuleChecker):
     """Checker for Sim Ready capability requirements."""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        try:
+            super().__init__(*args, **kwargs)
+        except TypeError:
+            kwargs.pop("parameters", None)
+            super().__init__(*args, **kwargs)
 
     def CheckStage(self, stage: Usd.Stage) -> None:
         """Check all NP requirements."""
