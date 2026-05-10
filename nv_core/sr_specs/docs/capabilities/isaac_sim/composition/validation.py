@@ -22,6 +22,39 @@ from pxr import Kind, Usd, UsdGeom, UsdPhysics, UsdShade
 from ... import Requirement
 
 
+def _list_op_added_or_explicit_items(list_op):
+    if list_op is None:
+        return []
+    method = getattr(list_op, "GetAddedOrExplicitItems", None)
+    if callable(method):
+        return list(method())
+    method = getattr(list_op, "GetAppliedItems", None)
+    if callable(method):
+        return list(method())
+
+    explicit_items = list(getattr(list_op, "explicitItems", []) or [])
+    if explicit_items:
+        return explicit_items
+
+    items = []
+    for attr_name in ("prependedItems", "addedItems", "appendedItems"):
+        for item in getattr(list_op, attr_name, []) or []:
+            if item not in items:
+                items.append(item)
+    return items
+
+
+def _prim_metadata_list_items(prim, *metadata_names):
+    for metadata_name in metadata_names:
+        try:
+            items = _list_op_added_or_explicit_items(prim.GetMetadata(metadata_name))
+        except Exception:
+            items = []
+        if items:
+            return items
+    return []
+
+
 class IsaacCompositionCapReqs(Requirement, Enum):
     ISA_001 = (
         "ISA.001",
@@ -95,11 +128,8 @@ class IsaacCompositionCapabilityChecker(omni.asset_validator.core.BaseRuleChecke
 
     def _check_reference_structure(self, default_prim: Usd.Prim):
         """Check if default prim has proper references and payloads"""
-        references = default_prim.GetReferences()
-        payloads = default_prim.GetPayloads()
-
         # Check for base reference
-        ref_list = references.GetAddedOrExplicitItems()
+        ref_list = _prim_metadata_list_items(default_prim, "references")
         has_base_ref = any("_base.usd" in str(ref.assetPath) for ref in ref_list)
         if not has_base_ref:
             self._AddFailedCheck(
@@ -109,7 +139,7 @@ class IsaacCompositionCapabilityChecker(omni.asset_validator.core.BaseRuleChecke
             )
 
         # Check for physics payload
-        payload_list = payloads.GetAddedOrExplicitItems()
+        payload_list = _prim_metadata_list_items(default_prim, "payload", "payloads")
         has_physics_payload = any("_physics.usd" in str(payload.assetPath) for payload in payload_list)
         if not has_physics_payload:
             self._AddFailedCheck(
